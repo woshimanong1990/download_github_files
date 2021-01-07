@@ -1,5 +1,5 @@
 # download_github_files
-download github repository special directory files, not the whole  repository  code.
+download github repository special directory files(eg, subdir), not the whole  repository  code.
 
 # install 
 install the dependancy
