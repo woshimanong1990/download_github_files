@@ -7,10 +7,15 @@ from bs4 import BeautifulSoup
 
 class DownloadFile:
     def __init__(self, url, download_directory):
+        """
+        url: The url will be download
+        download_directory: dir to save files
+        """
         self.url = url
         self.download_directory = download_directory
 
     def get_html(self, url, use_proxy=False):
+        # get html content
         headers = {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
             "Accept-Encoding": "gzip, deflate, br",
@@ -36,6 +41,7 @@ class DownloadFile:
         return BeautifulSoup(content, "html.parser")
 
     def parse(self, url):
+        # parse file url. if it is dir_urls, continue to parse
         content = self.get_html(url)
         soup = self.get_parse_soup(content)
         rows = soup.find_all("div", role="row", class_="Box-row")
@@ -56,6 +62,7 @@ class DownloadFile:
         return file_urls
 
     def parse_relative_path(self, url):
+        # get relative_path according to the url
         _url = self.url if self.url.endswith("/") else self.url + "/"
         branch_url = urljoin(_url,  "tree/master/") if "/tree/" not in self.url else self.url
         child_url = urlparse(url).path
